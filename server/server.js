@@ -43,5 +43,5 @@ app.delete('/usuario', (request, response) => {
 })
 
 app.listen(process.env.PORT, () => {
-    console.log('Server running:', port);
+    console.log('Server running:', process.env.PORT);
 })
