@@ -24,7 +24,7 @@ app.listen(process.env.PORT, () => {
     console.log('Server running:', process.env.PORT);
 })
 
-
+mongoose.set('useCreateIndex', true)
 mongoose.connect(
     process.env.URLDB,
     {
