@@ -20,7 +20,7 @@ app.get('/', (request, response) => {
     response.json('Hola mundo')
 })
 
-app.listen(process.env.PORT, () => {
+app.listen((process.env.PORT), function () {
     console.log('Server running:', process.env.PORT);
 })
 
