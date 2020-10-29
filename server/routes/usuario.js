@@ -4,12 +4,12 @@ const bodyParser = require('body-parser')
 const Usuario = require('../models/usuario')
 const bcrypt = require('bcrypt')
 const _ = require('underscore')
-
+const { verifyToken, verifyRole } = require('../middlewares/auth')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.get('/usuario', (request, response) => {
+app.get('/usuario', verifyToken, (request, response) => {
 
     let desde = request.query.desde || 0
     let limite = request.query.limite || 5
@@ -36,7 +36,7 @@ app.get('/usuario', (request, response) => {
         })
 })
 
-app.post('/usuario', function (request, response) {
+app.post('/usuario', [verifyToken, verifyRole], function (request, response) {
     let body = request.body
 
     let usuario = new Usuario({
@@ -59,7 +59,7 @@ app.post('/usuario', function (request, response) {
     })
 })
 
-app.put('/usuario/:id', (request, response) => {
+app.put('/usuario/:id', [verifyToken, verifyRole], (request, response) => {
     let id = request.params.id
     let body = _.pick(request.body, ['name', 'email', 'img', 'role', 'status'])
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, usuarioDB) => {
@@ -76,7 +76,7 @@ app.put('/usuario/:id', (request, response) => {
     })
 })
 
-app.delete('/dusuario/:id', (request, response) => {
+app.delete('/dusuario/:id', [verifyToken, verifyRole], (request, response) => {
 
     let id = request.params.id
 
@@ -106,7 +106,7 @@ app.delete('/dusuario/:id', (request, response) => {
 
 })
 
-app.delete('/usuario/:id', (request, response) => {
+app.delete('/usuario/:id', [verifyToken, verifyRole], (request, response) => {
 
     let id = request.params.id
 
@@ -139,6 +139,5 @@ app.delete('/usuario/:id', (request, response) => {
     })
 
 })
-
 
 module.exports = app

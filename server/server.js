@@ -4,15 +4,14 @@
  *  https://git.heroku.com/rocky-shelf-71442.git
  * 
 */
-
+require('./config/config')
 const express = require('express')
 const mongoose = require('mongoose')
-const app = express()
-
-require('./config/config')
-app.use(require('./routes/usuario'))
-
 const bodyParser = require('body-parser')
+
+const app = express()
+app.use(require('./routes/index'))
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -33,7 +32,7 @@ mongoose.connect(
     },
     err => {
         if (!err) {
-            console.log('DB conneccted');
+            console.log('DB conneccted', process.env.URLDB);
         } else {
             console.log('Error connecting', err);
         }
