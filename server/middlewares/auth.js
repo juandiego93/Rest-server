@@ -20,7 +20,7 @@ let verifyToken = (request, response, next) => {
 
 //Verify Role
 
-let verifyRole = (request, response, next) => {
+let verifyRoleAdmin = (request, response, next) => {
     let usuario = request.usuario
     if (usuario.role === 'ADMIN') {
         next()
@@ -36,5 +36,5 @@ let verifyRole = (request, response, next) => {
 
 module.exports = {
     verifyToken,
-    verifyRole
+    verifyRoleAdmin
 }
